@@ -1,0 +1,146 @@
+html{
+/*
+    background: -moz-linear-gradient(left, rgba(76,76,76,0.75) 0%, rgba(48,48,48,1) 50%, rgba(19,19,19,0.75) 100%);
+    background: -webkit-linear-gradient(left, rgba(76,76,76,0.75) 0%,rgba(48,48,48,1) 50%,rgba(19,19,19,0.75) 100%);
+    background: linear-gradient(to right, rgba(76,76,76,0.75) 0%,rgba(48,48,48,1) 50%,rgba(19,19,
+
+
+    background: red; /* For browsers that do not support gradients */
+    font-family:'Raleway', sans-serif;
+    background: -webkit-linear-gradient(left,#90AFC5,black,#90AFC5);
+    background: -o-linear-gradient(left,black,#90AFC5,black);
+    background: -moz-linear-gradient(left,black,#90AFC5,black);
+    background: linear-gradient(to right, #003B46,#90AFC5,#003B46);
+
+}
+
+/*ProductsSpecs*/
+.SmallText {
+    font-size: 15px;
+}
+.Title{
+  margin: 40px;
+  font-size: 30px;
+  text-shadow: 2px 0 0 #336B87, -2px 0 0 #336B87, 0 2px 0 #336B87, 0 -2px 0 #336B87, 1px 1px #336B87, -1px -1px 0 #336B87, 1px -1px 0 #336B87, -1px 1px 0 #336B87;
+
+}
+.SubTitle{
+  font-size: 20px;
+  text-shadow: 2px 0 0 #336B87, -2px 0 0 #336B87, 0 2px 0 #336B87, 0 -2px 0 #336B87, 1px 1px #336B87, -1px -1px 0 #336B87, 1px -1px 0 #336B87, -1px 1px 0 #336B87;
+}
+
+img {
+  border-radius: 20px;
+  border: 0px;
+  height: 300;
+  width: 500;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #66A5AD;
+    color: white;
+    width: 99%;
+    min-width: 857px;
+    padding: 10px;
+    border-color: #000;
+    border-style: hidden;
+    /*background: -webkit-horizional-gradient(left,White, #90AFC5);*/
+    /*text-shadow:2px 2px #ff0000;*/
+    border: 0px 0px 4px 0px;
+}
+
+#mainTitle {
+    font-size: 45px;
+    float: left;
+    color: #DDD;
+    text-shadow: 2px 0 0 #336B87, -2px 0 0 #336B87, 0 2px 0 #336B87, 0 -2px 0 #336B87, 1px 1px #336B87, -1px -1px 0 #336B87, 1px -1px 0 #336B87, -1px 1px 0 #336B87;
+}
+
+.navButton {
+    color: #AAA;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+    background: #07575B;
+    border-radius: 10px;
+    padding: 7px;
+    color: #fff;
+}
+
+nav {
+    margin: 0px 20px 0px 0px;
+    float: right;
+}
+
+section {
+    margin: 92px 150px 47px 150px;
+    padding: 20px 20px 20px 20px;
+    min-height: 409px;
+    background-color: #1E656D;
+    text-align: center;
+    color: #C4DFE6;
+    vertical-align: bottom;
+    border-color: #000;
+    border-style: solid;
+    border: 0px 4px 0px 4px;
+}
+
+
+footer {
+    position: fixed;
+    text-align: right;
+    bottom: 0;
+    left: 0;
+    background-color: #66A5AD;
+    border-color: #000;
+    border-style: solid;
+    border: 4px 0px 0px 0px;
+    color: white;
+    width: 98%;
+    padding: 13px 30px 13px 0px;
+}
+
+h1{
+    color: #fff;
+    background: #00293c;
+    margin-top: 0px;
+    font-size: 35px;
+    padding: 35px;
+    /*border: 4px inset #000;*/
+    border-radius: 15px;
+    text-align: right;
+    align-content: center;
+}
+
+#paragraphText{
+    text-align: center;;
+    font-size: 25px;
+    min-height: 300px;
+    font-family: 'Raleway', sans-serif;
+}
+
+#slideshow {
+    float:left;
+    border: 20px solid #black;
+}
+
+.mySlides {
+    border: 20px solid #black;
+
+}
+
+#icon {
+    width: 40px;
+    height: 40px;
+}
+
+.rowHighlight{
+  color: #C6D166;
+}

@@ -18,11 +18,14 @@ import java.util.Map;
 
 public class HttpServer {
 	
+	private static String fileDir;
 	private ServerSocket servSoc;
 	private SocketIOManager sockIo = new SocketIOManager();
 	
 	public static void main(String[] args) throws IOException {
 		HttpServer server = new HttpServer(8080);
+		System.out.println(System.getProperty("user.dir"));
+		fileDir = System.getProperty("user.dir").replace("\\httpserver", "\\project2");
 		server.run();
 	}
 	
@@ -45,7 +48,7 @@ public class HttpServer {
 				// Determine request type
 				RequestType requestMethod = determineRequestType(headers);
 				String CMDPath = headers.get("CMD").split("\\s+")[1];
-				String fileDir = "C:/Users/Adam Holbert Neumont/Documents/Classes/2(CSC210) Intro to Web Pres and Dev/project2" + CMDPath;
+				String fileDir = "../project2" + CMDPath;
 				
 				boolean successfulWrite = true;
 				if(requestMethod == RequestType.POST) {
@@ -189,6 +192,7 @@ public class HttpServer {
 
 	private RequestType determineRequestType(Map<String, String> headers) {
 		String[] CMDArray = headers.get("CMD").split("\\s+");
+		System.out.println(CMDArray[0]);
 		RequestType request = RequestType.valueOf(CMDArray[0]);
 		return request;
 	}
