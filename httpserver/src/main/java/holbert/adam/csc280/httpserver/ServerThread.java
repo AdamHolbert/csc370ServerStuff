@@ -8,14 +8,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class ServerThread extends Thread {
 	
 	private String fileDir;
 	private ServerSocket servSoc;
 	private SocketIOManager sockIo;
+	private static Object portLock = new Object();
+	private static Object stackLock = new Object();
+	public static Stack ResponseStack = new Stack();
+	
 	
 	public ServerThread(String fileDir, ServerSocket servSoc, SocketIOManager sockIo) {
 		this.fileDir = fileDir;
@@ -26,7 +32,7 @@ public class ServerThread extends Thread {
 	public void run() {
 		while (true) {
 			try(Socket socket = servSoc.accept()){
-				System.out.println("Got request on thread " + this.getId());
+				
 				// Read http request
 				Map<String, String> headers = sockIo.readHttpRequestHeaders(socket.getInputStream());
 				
@@ -34,6 +40,12 @@ public class ServerThread extends Thread {
 				RequestType requestMethod = determineRequestType(headers);
 				String CMDPath = headers.get("CMD").split("\\s+")[1];
 				String fileDir = "../project2" + CMDPath;
+				
+				System.out.println(this.getId() + "  " + LocalDateTime.now() + ") Request for file '" + CMDPath + "'.");
+				ResponseObject ro = new ResponseObject(this.getId(), CMDPath);
+				synchronized (stackLock) {
+					ResponseStack.add(ro);
+				}
 				
 				boolean successfulWrite = true;
 				if(requestMethod == RequestType.POST) {
@@ -96,8 +108,10 @@ public class ServerThread extends Thread {
 				}
 				// Create response
 				// Write response
-				sockIo.writeHttpResponceHeaders(socket.getOutputStream(), responseHeaders);
-				sockIo.writeHttpResponceBody(socket.getOutputStream(), file);
+				synchronized (portLock) {
+					sockIo.writeHttpResponceHeaders(socket.getOutputStream(), responseHeaders);
+					sockIo.writeHttpResponceBody(socket.getOutputStream(), file);	
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace(System.err);
