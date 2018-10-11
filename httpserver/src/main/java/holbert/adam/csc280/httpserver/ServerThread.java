@@ -39,9 +39,8 @@ public class ServerThread extends Thread {
 				// Determine request type
 				RequestType requestMethod = determineRequestType(headers);
 				String CMDPath = headers.get("CMD").split("\\s+")[1];
-				String fileDir = "../project2" + CMDPath;
-				
-				System.out.println(this.getId() + "  " + LocalDateTime.now() + ") Request for file '" + CMDPath + "'.");
+				String fileDir = this.fileDir + CMDPath;
+				System.out.println("Thread #"+this.getId() + "| " + LocalDateTime.now() + " request for file '" + CMDPath + "'.");
 				ResponseObject ro = new ResponseObject(this.getId(), CMDPath);
 				synchronized (stackLock) {
 					ResponseStack.add(ro);
@@ -62,7 +61,6 @@ public class ServerThread extends Thread {
 					if(CMDPath.matches("/calc/.*")) {
 						HashMap<String, String> values = Calculator.parsePath(CMDPath);
 						try {			
-							System.out.println(values.get("operand1"));
 							double a = Double.parseDouble(values.get("operand1"));
 							double b = Double.parseDouble(values.get("operand2"));
 							
@@ -191,7 +189,6 @@ public class ServerThread extends Thread {
 
 	private RequestType determineRequestType(Map<String, String> headers) {
 		String[] CMDArray = headers.get("CMD").split("\\s+");
-		System.out.println(CMDArray[0]);
 		RequestType request = RequestType.valueOf(CMDArray[0]);
 		return request;
 	}

@@ -35,7 +35,7 @@ public class HttpServer {
 		}
 		System.out.println("Starting server on localhost:" + PORT_NUMBER + "/index.html");
 		
-		String fileDir = System.getProperty("user.dir").replace("\\httpserver", "\\project2");
+		String fileDir = System.getProperty("user.dir") + "\\src\\main\\resources\\project2";
 		SocketIOManager sockIo = new SocketIOManager();
 				
 		ExecutorService svc = Executors.newFixedThreadPool(THREAD_POOL_SIZE, new ThreadFactory() {
