@@ -16,17 +16,35 @@ import java.net.Socket;
 import java.net.SocketImpl;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 public class HttpServer {
 	
-	private static final int THREAD_POOL_SIZE = 5;
-	private static final int PORT_NUMBER = 8080;
+	public final int THREAD_POOL_SIZE;
+	public final int PORT_NUMBER;
+	private ExecutorService svc;
+	private ServerSocket servSoc;
+	public final Stack<ResponseObject> ResponseStack;
 	
 	public static void main(String[] args) throws IOException {
-		ServerSocket servSoc = null;
+		(new HttpServer(5, 8080)).run();
+	}
+	
+	public HttpServer() {
+		this(5, 8080);
+	}
+	
+	public HttpServer(int THREAD_POOL_SIZE, int PORT_NUMBER) {
+		this.THREAD_POOL_SIZE = THREAD_POOL_SIZE;
+		this.PORT_NUMBER = PORT_NUMBER;
+		ResponseStack = new Stack<ResponseObject>();
+	}
+	
+	public void run() {
+		servSoc = null;
 		try {
 			servSoc = new ServerSocket(PORT_NUMBER);
 		} catch (IOException e) {
@@ -38,7 +56,7 @@ public class HttpServer {
 		String fileDir = System.getProperty("user.dir") + "\\src\\main\\resources\\project2";
 		SocketIOManager sockIo = new SocketIOManager();
 				
-		ExecutorService svc = Executors.newFixedThreadPool(THREAD_POOL_SIZE, new ThreadFactory() {
+		svc = Executors.newFixedThreadPool(THREAD_POOL_SIZE, new ThreadFactory() {
 			public Thread newThread(Runnable r) {
 				Thread t = new Thread(r);
 				t.setName("Thread #" + t.getId());
@@ -47,8 +65,18 @@ public class HttpServer {
 		});
 		
 		for (int i = 0; i < THREAD_POOL_SIZE; i++) {
-			svc.submit(new ServerThread(fileDir, servSoc, sockIo));
+			svc.submit(new ServerThread(ResponseStack, fileDir, servSoc, sockIo));
 		}
 //		server.run();
+	}
+
+	public void shutdownNow() {
+		svc.shutdownNow();
+		try {
+			servSoc.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
